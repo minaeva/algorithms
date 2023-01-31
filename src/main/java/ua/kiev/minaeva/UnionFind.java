@@ -3,11 +3,8 @@ package ua.kiev.minaeva;
 
 public class UnionFind {
 
-    private int[] array;
+    private final int[] array;
 
-    public UnionFind() {
-        new UnionFind(2);
-    }
     public UnionFind(int n) {
         array = new int[n];
         for (int i = 0; i < n; i++) {
@@ -19,10 +16,7 @@ public class UnionFind {
         return array;
     }
     public boolean isConnected(int p, int q) {
-        if (array[p] == array[q]) {
-            return true;
-        }
-        return false;
+        return array[p] == array[q];
     }
 
     public void union(int first, int second) {
