@@ -6,30 +6,27 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-//Write a Java Program to count the number of words in a string using HashMap
-//input "This this is is done by Roman Roman"
-//output {by=1, this=1, This=1, Roman=2, is=2, done=1}
 public class CountStrings {
 
 
-    public static void main(String[] args) {
-        String input = "This this is is done by Roman Roman";
+    public Map<String, Integer> count(String input) {
         List<String> words = Arrays.asList(input.split(" "));
-        Map<String, Integer> collect = words
+        Map<String, Integer> result = words
                 .stream()
-//                .collect(Collectors.toMap(word -> word, word -> 1, Integer::sum));
+//               Function.identity() is the same as word -> word
                 .collect(Collectors.toMap(Function.identity(), word -> 1, Integer::sum));
-        System.out.println(collect);
+        System.out.println(result);
+        return result;
     }
 
 
-    public static void listToPrint(String[] args)
+    public Map<String, Integer> countInParallel(String input)
     {
-        List<String> list = Arrays.asList(
-                "hello", "bye", "ciao", "bye", "ciao");
-        Map<String, Integer> counts = list.parallelStream().
+        List<String> words = Arrays.asList(input.split(" "));
+        Map<String, Integer> result = words.parallelStream().
                 collect(Collectors.toMap(
-                        w -> w, w -> 1, Integer::sum));
-        System.out.println(counts);
+                        word -> word, word -> 1, Integer::sum));
+        System.out.println(result);
+        return result;
     }
 }

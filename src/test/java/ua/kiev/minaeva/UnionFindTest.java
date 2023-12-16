@@ -1,24 +1,23 @@
 package ua.kiev.minaeva;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UnionFindTest {
 
     @Test
     public void shouldCreateArrayOnStart() {
         UnionFind unionFind = new UnionFind(5);
-        assertTrue(Arrays.equals(unionFind.getArray(), new int[]{0, 1, 2, 3, 4}));
+        assertArrayEquals(unionFind.getArray(), new int[]{0, 1, 2, 3, 4});
     }
 
     @Test
     public void union1and2() {
         UnionFind unionFind = new UnionFind(5);
         unionFind.union(1, 2);
-        assertTrue(Arrays.equals(unionFind.getArray(), new int[]{0, 1, 1, 3, 4}));
+        assertArrayEquals(unionFind.getArray(), new int[]{0, 1, 1, 3, 4});
     }
 
     @Test
@@ -26,7 +25,7 @@ public class UnionFindTest {
         UnionFind unionFind = new UnionFind(5);
         unionFind.union(1, 2);
         unionFind.union(2, 3);
-        assertTrue(Arrays.equals(unionFind.getArray(), new int[]{0, 1, 1, 1, 4}));
+        assertArrayEquals(unionFind.getArray(), new int[]{0, 1, 1, 1, 4});
     }
 
     @Test
@@ -37,7 +36,7 @@ public class UnionFindTest {
         unionFind.union(6, 5);
         unionFind.union(9, 4);
         unionFind.union(2, 1);
-        assertTrue(Arrays.equals(unionFind.getArray(), new int[]{0, 1, 1, 8, 8, 5, 5, 7, 8, 8}));
+        assertArrayEquals(unionFind.getArray(), new int[]{0, 1, 1, 8, 8, 5, 5, 7, 8, 8});
         assertTrue(unionFind.isConnected(8,9));
     }
 }
