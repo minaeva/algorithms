@@ -19,7 +19,8 @@ public class LRUCache {
     private final int capacity;
 
     private final Map<Integer, LRUNode> hashMap;
-    // borders of the queue, first value is actually head.next, last value - tail.previous
+    // borders of the queue
+    // first value is actually head.next, last value - tail.previous
     private final LRUNode head;
     private final LRUNode tail;
 
