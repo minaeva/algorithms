@@ -7,6 +7,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
+import ua.kiev.minaeva.ssml.model.SSMLDocument;
+import ua.kiev.minaeva.ssml.parser.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -56,9 +59,8 @@ public class SSMLContext {
 
     private Map<String, TagParser> parsingStrategies;
 
-    public void parseString(String string) {
+    public void handleParsing(String string) {
         prepareStrategies();
-
         try {
             parseSSML(string);
         } catch (Exception e) {
@@ -72,11 +74,9 @@ public class SSMLContext {
         parsingStrategies.put("prosody", new ProsodyTagParser(this));
         parsingStrategies.put("voice", new VoiceTagParser());
         parsingStrategies.put("emphasis", new EmphasisTagParser());
-        parsingStrategies.put("say-as", new SayAsTagParser());
     }
 
-    private void parseSSML(String ssml) throws IOException, SAXException, ParserConfigurationException {
-
+    private SSMLDocument parseSSML(String ssml) throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new InputSource(new StringReader(ssml)));
@@ -85,10 +85,12 @@ public class SSMLContext {
         Element rootElement = document.getDocumentElement();
         System.out.println("Root: " + rootElement.getNodeName());
 
-        traverseNodes(rootElement);
+        SSMLDocument ssmlDocument = new SSMLDocument();
+        traverseNodes(rootElement, ssmlDocument.getRoot());
+        return ssmlDocument;
     }
 
-    protected void traverseNodes(Node node) {
+    public void traverseNodes(Node node, AbstractSSMLElement parent) {
         NodeList nodeList = node.getChildNodes();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -100,7 +102,7 @@ public class SSMLContext {
                 TagParser parser = parsingStrategies.get(tagName);
 
                 if (parser != null) {
-                    parser.parse(element);
+                    parser.parse(element, parent);
                 } else {
                     System.out.println("Unknown tag " + tagName);
                 }
@@ -111,6 +113,6 @@ public class SSMLContext {
 
     @Test
     void parseChatGPTString() {
-        parseString(ssmlFromChatGpt);
+        handleParsing(ssmlFromChatGpt);
     }
 }
