@@ -1,11 +1,11 @@
 package ua.kiev.minaeva.ssml.model;
 
-public class Prosody extends AbstractSSMLElement {
+public class ProsodyElement extends AbstractSSMLElement {
 
     private String rate;
     private String pitch;
 
-    public Prosody(AbstractSSMLElement parent, String rate, String pitch) {
+    public ProsodyElement(AbstractSSMLElement parent, String rate, String pitch) {
         super("prosody", parent);
         this.rate = rate;
         this.pitch = pitch;
@@ -19,14 +19,9 @@ public class Prosody extends AbstractSSMLElement {
     @Override
     public void addAttribute(String key, String value) {
         switch (key) {
-            case "rate":
-                this.rate = value;
-                break;
-            case "pitch":
-                this.pitch = value;
-                break;
-            default:
-                super.addAttribute(key, value);
+            case "rate" -> this.rate = value;
+            case "pitch" -> this.pitch = value;
+            default -> super.addAttribute(key, value);
         }
     }
 

@@ -2,7 +2,7 @@ package ua.kiev.minaeva.ssml.parser;
 
 import org.w3c.dom.Element;
 import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
-import ua.kiev.minaeva.ssml.model.Voice;
+import ua.kiev.minaeva.ssml.model.VoiceElement;
 
 public class VoiceTagParser implements TagParser {
 
@@ -14,9 +14,9 @@ public class VoiceTagParser implements TagParser {
         String requiredAttribute = element.getAttribute("required");
         String orderingAttribute = element.getAttribute("ordering");
 
-        Voice voice = new Voice(parent, genderAttribute, variantAttribute,
+        VoiceElement voiceElement = new VoiceElement(parent, genderAttribute, variantAttribute,
                 languageAttribute, requiredAttribute, orderingAttribute);
 
-        parent.addChild(voice);
+        parent.addChild(voiceElement);
     }
 }

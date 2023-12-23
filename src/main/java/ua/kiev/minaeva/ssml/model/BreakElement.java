@@ -1,11 +1,11 @@
 package ua.kiev.minaeva.ssml.model;
 
-public class Break extends AbstractSSMLElement {
+public class BreakElement extends AbstractSSMLElement {
 
     private String time;
     private String strength;
 
-    public Break(AbstractSSMLElement parent, String time, String strength) {
+    public BreakElement(AbstractSSMLElement parent, String time, String strength) {
         super("break", parent);
         this.time = time;
         this.strength = strength;
@@ -19,14 +19,9 @@ public class Break extends AbstractSSMLElement {
     @Override
     public void addAttribute(String key, String value) {
         switch (key) {
-            case "time":
-                this.time = value;
-                break;
-            case "strength":
-                this.strength = value;
-                break;
-            default:
-                super.addAttribute(key, value);
+            case "time" -> this.time = value;
+            case "strength" -> this.strength = value;
+            default -> super.addAttribute(key, value);
         }
     }
 

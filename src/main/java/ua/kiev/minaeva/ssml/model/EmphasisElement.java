@@ -1,10 +1,10 @@
 package ua.kiev.minaeva.ssml.model;
 
-public class Emphasis extends AbstractSSMLElement {
+public class EmphasisElement extends AbstractSSMLElement {
 
     private String level;
 
-    public Emphasis(AbstractSSMLElement parent, String level) {
+    public EmphasisElement(AbstractSSMLElement parent, String level) {
         super("emphasis", parent);
         this.level = level;
     }

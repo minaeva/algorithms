@@ -1,6 +1,6 @@
 package ua.kiev.minaeva.ssml.model;
 
-public class Voice extends AbstractSSMLElement {
+public class VoiceElement extends AbstractSSMLElement {
 
     private String gender;
     private String variant;
@@ -13,8 +13,8 @@ public class Voice extends AbstractSSMLElement {
         return "voice";
     }
 
-    public Voice(AbstractSSMLElement parent, String gender, String variant,
-                 String language, String required, String ordering) {
+    public VoiceElement(AbstractSSMLElement parent, String gender, String variant,
+                        String language, String required, String ordering) {
         super("voice", parent);
         this.gender = gender;
         this.variant = variant;
@@ -24,39 +24,26 @@ public class Voice extends AbstractSSMLElement {
     }
 
     @Override
-    public void addAttribute(String name, String value) {
-        switch (name) {
-            case "gender":
-                this.gender = value;
-                break;
-            case "variant":
-                this.variant = value;
-                break;
-            case "language":
-                this.language = value;
-                break;
-            case "required":
-                this.required = value;
-            case "ordering":
-                this.ordering = value;
-                break;
-            default:
-                System.out.println("Unknown tag " + name);
+    public void addAttribute(String key, String value) {
+        switch (key) {
+            case "gender" -> this.gender = value;
+            case "variant" -> this.variant = value;
+            case "language" -> this.language = value;
+            case "required" -> this.required = value;
+            case "ordering" -> this.ordering = value;
+            default -> super.addAttribute(key, value);
         }
     }
 
     @Override
-    public String getAttribute(String name) {
-        return switch (name) {
+    public String getAttribute(String key) {
+        return switch (key) {
             case "gender" -> this.gender;
             case "variant" -> this.variant;
             case "language" -> this.language;
             case "required" -> this.required;
             case "ordering" -> this.ordering;
-            default -> {
-                System.out.println("Unknown tag " + name);
-                yield null;
-            }
+            default -> super.getAttribute(key);
         };
     }
 

@@ -9,6 +9,8 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
 import ua.kiev.minaeva.ssml.model.SSMLDocument;
+import ua.kiev.minaeva.ssml.model.SSMLElementContract;
+import ua.kiev.minaeva.ssml.model.TextElement;
 import ua.kiev.minaeva.ssml.parser.*;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -22,7 +24,7 @@ import java.util.Map;
 /*
 <speak>: The root element of any SSML document.
 <voice>: Specifies the voice to be used for the text-to-speech conversion.
-<prosody>: Alters aspects of speech such as pitch, rate, and volume.
+<prosodyElement>: Alters aspects of speech such as pitch, rate, and volume.
 <break>: Inserts a pause in the speech.
 <emphasis>: Indicates emphasized speech.
 <sub>: Substitutes a portion of text with something else during the synthesis.
@@ -59,10 +61,10 @@ public class SSMLContext {
 
     private Map<String, TagParser> parsingStrategies;
 
-    public void handleParsing(String string) {
+    public SSMLDocument handleParsing(String string) {
         prepareStrategies();
         try {
-            parseSSML(string);
+            return parseSSML(string);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -70,10 +72,15 @@ public class SSMLContext {
 
     private void prepareStrategies() {
         parsingStrategies = new HashMap<>();
+        parsingStrategies.put("audio", new AudioTagParser(this));
         parsingStrategies.put("break", new BreakTagParser());
-        parsingStrategies.put("prosody", new ProsodyTagParser(this));
-        parsingStrategies.put("voice", new VoiceTagParser());
         parsingStrategies.put("emphasis", new EmphasisTagParser());
+        parsingStrategies.put("p", new PParser(this));
+        parsingStrategies.put("prosody", new ProsodyTagParser(this));
+        parsingStrategies.put("say-as", new SayAsTagParser(this));
+        parsingStrategies.put("s", new SParser(this));
+        parsingStrategies.put("sub", new SubParser(this));
+        parsingStrategies.put("voice", new VoiceTagParser());
     }
 
     private SSMLDocument parseSSML(String ssml) throws IOException, SAXException, ParserConfigurationException {
@@ -83,8 +90,6 @@ public class SSMLContext {
         document.getDocumentElement().normalize();
 
         Element rootElement = document.getDocumentElement();
-        System.out.println("Root: " + rootElement.getNodeName());
-
         SSMLDocument ssmlDocument = new SSMLDocument();
         traverseNodes(rootElement, ssmlDocument.getRoot());
         return ssmlDocument;
@@ -97,22 +102,56 @@ public class SSMLContext {
             Node currentNode = nodeList.item(i);
 
             if (currentNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element element = (Element) currentNode;
-                String tagName = element.getTagName();
-                TagParser parser = parsingStrategies.get(tagName);
-
-                if (parser != null) {
-                    parser.parse(element, parent);
-                } else {
-                    System.out.println("Unknown tag " + tagName);
-                }
+                parseElement(currentNode, parent);
+            } else if (currentNode.getNodeType() == Node.TEXT_NODE) {
+                parseText(currentNode, parent);
             }
         }
 
     }
 
+    private void parseElement(Node currentNode, AbstractSSMLElement parent) {
+        Element element = (Element) currentNode;
+        String tagName = element.getTagName();
+        TagParser parser = parsingStrategies.get(tagName);
+
+        if (parser != null) {
+            parser.parse(element, parent);
+        } else {
+            System.out.println("Unknown tag " + tagName);
+        }
+    }
+
+    private void parseText(Node currentNode, AbstractSSMLElement parent) {
+        String textContent = currentNode.getTextContent().trim();
+        TextElement textElement = new TextElement(parent, textContent);
+        parent.addChild(textElement);
+    }
+
     @Test
     void parseChatGPTString() {
-        handleParsing(ssmlFromChatGpt);
+        SSMLDocument ssmlDocument = handleParsing(ssmlFromChatGpt);
+        printDocument(ssmlDocument);
     }
+
+    @Test
+    void parseGoogleString() {
+        SSMLDocument ssmlDocument = handleParsing(ssmlFromGoogle);
+        printDocument(ssmlDocument);
+    }
+
+    private void printDocument(SSMLDocument document) {
+        System.out.println(document.getRoot().getTagName());
+        for (SSMLElementContract child : document.getRoot().getChildren()) {
+            printElement(child);
+        }
+    }
+
+    private void printElement(SSMLElementContract element) {
+        System.out.println(element.getTagName());
+        for (SSMLElementContract child : element.getChildren()) {
+            printElement(child);
+        }
+    }
+
 }

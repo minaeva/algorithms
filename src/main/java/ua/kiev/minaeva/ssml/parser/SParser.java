@@ -5,23 +5,21 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ua.kiev.minaeva.ssml.SSMLContext;
 import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
-import ua.kiev.minaeva.ssml.model.ProsodyElement;
+import ua.kiev.minaeva.ssml.model.SElement;
 
-public class ProsodyTagParser implements TagParser {
+public class SParser implements TagParser {
 
     private final SSMLContext context;
 
-    public ProsodyTagParser(SSMLContext context) {
+    public SParser(SSMLContext context) {
         this.context = context;
     }
 
     @Override
     public void parse(Element element, AbstractSSMLElement parent) {
-        String rateElement = element.getAttribute("rate");
-        String pitchElement = element.getAttribute("pitch");
+        SElement sElement = new SElement(parent);
 
-        ProsodyElement prosodyElement = new ProsodyElement(parent,
-                rateElement, pitchElement);
+        parent.addChild(sElement);
 
         NodeList childNodes = element.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
@@ -29,8 +27,9 @@ public class ProsodyTagParser implements TagParser {
             if (childNode.getNodeType() == Node.ELEMENT_NODE ||
                     childNode.getNodeType() == Node.TEXT_NODE
             ) {
-                context.traverseNodes(childNode, prosodyElement);
+                context.traverseNodes(childNode, sElement);
             }
         }
     }
+
 }

@@ -5,23 +5,25 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ua.kiev.minaeva.ssml.SSMLContext;
 import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
-import ua.kiev.minaeva.ssml.model.ProsodyElement;
+import ua.kiev.minaeva.ssml.model.SayAsElement;
 
-public class ProsodyTagParser implements TagParser {
+public class SayAsTagParser implements TagParser {
 
     private final SSMLContext context;
 
-    public ProsodyTagParser(SSMLContext context) {
+    public SayAsTagParser(SSMLContext context) {
         this.context = context;
     }
 
     @Override
     public void parse(Element element, AbstractSSMLElement parent) {
-        String rateElement = element.getAttribute("rate");
-        String pitchElement = element.getAttribute("pitch");
+        String interpretAsAttribute = element.getAttribute("interpretAs");
+        String formatAttribute = element.getAttribute("format");
+        String detailAttribute = element.getAttribute("detail");
 
-        ProsodyElement prosodyElement = new ProsodyElement(parent,
-                rateElement, pitchElement);
+        SayAsElement sayAsElement = new SayAsElement(parent, interpretAsAttribute, formatAttribute, detailAttribute);
+
+        parent.addChild(sayAsElement);
 
         NodeList childNodes = element.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
@@ -29,7 +31,7 @@ public class ProsodyTagParser implements TagParser {
             if (childNode.getNodeType() == Node.ELEMENT_NODE ||
                     childNode.getNodeType() == Node.TEXT_NODE
             ) {
-                context.traverseNodes(childNode, prosodyElement);
+                context.traverseNodes(childNode, sayAsElement);
             }
         }
     }
