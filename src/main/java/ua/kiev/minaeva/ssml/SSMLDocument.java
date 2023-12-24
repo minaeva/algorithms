@@ -1,4 +1,7 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml;
+
+import ua.kiev.minaeva.ssml.element.AbstractSSMLElement;
+import ua.kiev.minaeva.ssml.element.SpeakElement;
 
 public class SSMLDocument {
 

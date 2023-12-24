@@ -7,11 +7,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
-import ua.kiev.minaeva.ssml.model.SSMLDocument;
-import ua.kiev.minaeva.ssml.model.SSMLElementContract;
-import ua.kiev.minaeva.ssml.model.TextElement;
+import ua.kiev.minaeva.ssml.element.AbstractSSMLElement;
+import ua.kiev.minaeva.ssml.element.SSMLElementContract;
+import ua.kiev.minaeva.ssml.element.TextElement;
 import ua.kiev.minaeva.ssml.parser.*;
+import ua.kiev.minaeva.ssml.visitor.PrintingVisitor;
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -107,7 +108,6 @@ public class SSMLContext {
                 parseText(currentNode, parent);
             }
         }
-
     }
 
     private void parseElement(Node currentNode, AbstractSSMLElement parent) {
@@ -141,17 +141,10 @@ public class SSMLContext {
     }
 
     private void printDocument(SSMLDocument document) {
-        System.out.println(document.getRoot().getTagName());
+        SSMLElementVisitor visitor = new PrintingVisitor();
+        document.getRoot().accept(visitor);
         for (SSMLElementContract child : document.getRoot().getChildren()) {
-            printElement(child);
+            child.accept(visitor);
         }
     }
-
-    private void printElement(SSMLElementContract element) {
-        System.out.println(element.getTagName());
-        for (SSMLElementContract child : element.getChildren()) {
-            printElement(child);
-        }
-    }
-
 }

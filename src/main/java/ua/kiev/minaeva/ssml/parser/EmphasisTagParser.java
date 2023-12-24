@@ -1,8 +1,8 @@
 package ua.kiev.minaeva.ssml.parser;
 
 import org.w3c.dom.Element;
-import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
-import ua.kiev.minaeva.ssml.model.EmphasisElement;
+import ua.kiev.minaeva.ssml.element.AbstractSSMLElement;
+import ua.kiev.minaeva.ssml.element.EmphasisElement;
 
 public class EmphasisTagParser implements TagParser {
 

@@ -4,8 +4,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ua.kiev.minaeva.ssml.SSMLContext;
-import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
-import ua.kiev.minaeva.ssml.model.AudioElement;
+import ua.kiev.minaeva.ssml.element.AbstractSSMLElement;
+import ua.kiev.minaeva.ssml.element.AudioElement;
 
 public class AudioTagParser implements TagParser {
 
@@ -17,17 +17,7 @@ public class AudioTagParser implements TagParser {
 
     @Override
     public void parse(Element element, AbstractSSMLElement parent) {
-        String srcAttribute = element.getAttribute("src");
-        String clipBeginAttribute = element.getAttribute("clipBegin");
-        String clipEndAttribute = element.getAttribute("clipEnd");
-        String speedAttribute = element.getAttribute("speed");
-        String repeatCountAttribute = element.getAttribute("repeatCount");
-        String repeatDurAttribute = element.getAttribute("repeatDur");
-        String soundLevelAttribute = element.getAttribute("soundLevel");
-
-        AudioElement audioElement = new AudioElement(parent, srcAttribute, clipBeginAttribute,
-                clipEndAttribute, speedAttribute, repeatCountAttribute, repeatDurAttribute,
-                soundLevelAttribute);
+        AudioElement audioElement = getAudioElement(element, parent);
 
         parent.addChild(audioElement);
 
@@ -40,5 +30,19 @@ public class AudioTagParser implements TagParser {
                 context.traverseNodes(childNode, audioElement);
             }
         }
+    }
+
+    private AudioElement getAudioElement(Element element, AbstractSSMLElement parent) {
+        String srcAttribute = element.getAttribute("src");
+        String clipBeginAttribute = element.getAttribute("clipBegin");
+        String clipEndAttribute = element.getAttribute("clipEnd");
+        String speedAttribute = element.getAttribute("speed");
+        String repeatCountAttribute = element.getAttribute("repeatCount");
+        String repeatDurAttribute = element.getAttribute("repeatDur");
+        String soundLevelAttribute = element.getAttribute("soundLevel");
+
+        return new AudioElement(parent, srcAttribute, clipBeginAttribute,
+                clipEndAttribute, speedAttribute, repeatCountAttribute, repeatDurAttribute,
+                soundLevelAttribute);
     }
 }

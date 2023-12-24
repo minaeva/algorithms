@@ -1,4 +1,6 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 public class VoiceElement extends AbstractSSMLElement {
 
@@ -45,6 +47,11 @@ public class VoiceElement extends AbstractSSMLElement {
             case "ordering" -> this.ordering;
             default -> super.getAttribute(key);
         };
+    }
+
+    @Override
+    public void accept(SSMLElementVisitor visitor) {
+        visitor.visit(this);
     }
 
     public String getGender() {

@@ -4,8 +4,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ua.kiev.minaeva.ssml.SSMLContext;
-import ua.kiev.minaeva.ssml.model.AbstractSSMLElement;
-import ua.kiev.minaeva.ssml.model.PElement;
+import ua.kiev.minaeva.ssml.element.AbstractSSMLElement;
+import ua.kiev.minaeva.ssml.element.PElement;
 
 public class PParser implements TagParser {
 
@@ -18,6 +18,7 @@ public class PParser implements TagParser {
     @Override
     public void parse(Element element, AbstractSSMLElement parent) {
         PElement pElement = new PElement(parent);
+
         parent.addChild(pElement);
 
         NodeList childNodes = element.getChildNodes();

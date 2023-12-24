@@ -1,4 +1,6 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,8 +11,8 @@ public abstract class AbstractSSMLElement implements SSMLElementContract {
 
     private String tagName;
     private SSMLElementContract parent;
-    private List<SSMLElementContract> children = new ArrayList<>();
-    private Map<String, String> attributes = new HashMap<>();
+    private final List<SSMLElementContract> children = new ArrayList<>();
+    private final Map<String, String> attributes = new HashMap<>();
 
     @Override
     public void setParent(SSMLElementContract element) {
@@ -51,6 +53,8 @@ public abstract class AbstractSSMLElement implements SSMLElementContract {
     public String getTagName() {
         return this.tagName;
     }
+
+    public abstract void accept(SSMLElementVisitor visitor);
 
     public AbstractSSMLElement() {
     }

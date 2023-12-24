@@ -1,4 +1,6 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 import java.util.List;
 import java.util.Map;
@@ -21,4 +23,5 @@ public interface SSMLElementContract {
 
     String getTagName();
 
+    void accept(SSMLElementVisitor visitor);
 }

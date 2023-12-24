@@ -1,4 +1,6 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 public class BreakElement extends AbstractSSMLElement {
 
@@ -32,6 +34,11 @@ public class BreakElement extends AbstractSSMLElement {
             case "strength" -> this.strength;
             default -> super.getAttribute(key);
         };
+    }
+
+    @Override
+    public void accept(SSMLElementVisitor visitor) {
+        visitor.visit(this);
     }
 
     public String getTime() {

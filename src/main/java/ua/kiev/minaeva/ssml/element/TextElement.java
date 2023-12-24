@@ -1,4 +1,6 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +36,11 @@ public class TextElement extends AbstractSSMLElement {
     @Override
     public List<SSMLElementContract> getChildren() {
         return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public void accept(SSMLElementVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

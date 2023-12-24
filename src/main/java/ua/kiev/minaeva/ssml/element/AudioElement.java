@@ -1,4 +1,6 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 public class AudioElement extends AbstractSSMLElement {
 
@@ -54,6 +56,11 @@ public class AudioElement extends AbstractSSMLElement {
             case "soundLevel" -> this.soundLevel;
             default -> super.getAttribute(key);
         };
+    }
+
+    @Override
+    public void accept(SSMLElementVisitor visitor) {
+        visitor.visit(this);
     }
 
     public String getSrc() {

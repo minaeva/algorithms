@@ -1,4 +1,6 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 public class SayAsElement extends AbstractSSMLElement {
 
@@ -21,7 +23,7 @@ public class SayAsElement extends AbstractSSMLElement {
     @Override
     public void addAttribute(String key, String value) {
         switch (key) {
-            case "interpretAs" -> this.interpretAs = value;
+            case "interpret-as" -> this.interpretAs = value;
             case "format" -> this.format = value;
             case "detail" -> this.detail = value;
             default -> super.addAttribute(key, value);
@@ -31,11 +33,16 @@ public class SayAsElement extends AbstractSSMLElement {
     @Override
     public String getAttribute(String key) {
         return switch (key) {
-            case "interpretAs" -> this.interpretAs;
+            case "interpret-as" -> this.interpretAs;
             case "format" -> this.format;
             case "detail" -> this.detail;
             default -> super.getAttribute(key);
         };
+    }
+
+    @Override
+    public void accept(SSMLElementVisitor visitor) {
+        visitor.visit(this);
     }
 
     public String getInterpretAs() {

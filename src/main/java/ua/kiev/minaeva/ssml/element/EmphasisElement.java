@@ -1,4 +1,6 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 public class EmphasisElement extends AbstractSSMLElement {
 
@@ -29,6 +31,11 @@ public class EmphasisElement extends AbstractSSMLElement {
             return this.level;
         }
         return super.getAttribute(key);
+    }
+
+    @Override
+    public void accept(SSMLElementVisitor visitor) {
+        visitor.visit(this);
     }
 
     public String getLevel() {

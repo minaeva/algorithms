@@ -1,4 +1,7 @@
-package ua.kiev.minaeva.ssml.model;
+package ua.kiev.minaeva.ssml.element;
+
+
+import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 public class SElement extends AbstractSSMLElement {
 
@@ -9,6 +12,11 @@ public class SElement extends AbstractSSMLElement {
     @Override
     public String getTagName() {
         return "s";
+    }
+
+    @Override
+    public void accept(SSMLElementVisitor visitor) {
+        visitor.visit(this);
     }
 
 }
