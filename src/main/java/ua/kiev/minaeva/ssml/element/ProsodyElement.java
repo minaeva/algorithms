@@ -2,12 +2,12 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class ProsodyElement extends AbstractSSMLElement {
+public class ProsodyElement extends AbstractElement {
 
     private String rate;
     private String pitch;
 
-    public ProsodyElement(AbstractSSMLElement parent, String rate, String pitch) {
+    public ProsodyElement(AbstractElement parent, String rate, String pitch) {
         super("prosody", parent);
         this.rate = rate;
         this.pitch = pitch;

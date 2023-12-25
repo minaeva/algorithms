@@ -2,7 +2,7 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class AudioElement extends AbstractSSMLElement {
+public class AudioElement extends AbstractElement {
 
     private String src;
     private String clipBegin;
@@ -12,7 +12,7 @@ public class AudioElement extends AbstractSSMLElement {
     private String repeatDur;
     private String soundLevel;
 
-    public AudioElement(AbstractSSMLElement parent, String src,
+    public AudioElement(AbstractElement parent, String src,
                         String clipBegin, String clipEnd, String speed,
                         String repeatCount, String repeatDur, String soundLevel) {
         super("audio", parent);

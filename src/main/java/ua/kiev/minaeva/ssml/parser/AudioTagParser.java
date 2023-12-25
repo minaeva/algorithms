@@ -4,7 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ua.kiev.minaeva.ssml.SSMLContext;
-import ua.kiev.minaeva.ssml.element.AbstractSSMLElement;
+import ua.kiev.minaeva.ssml.element.AbstractElement;
 import ua.kiev.minaeva.ssml.element.AudioElement;
 
 public class AudioTagParser implements TagParser {
@@ -16,7 +16,7 @@ public class AudioTagParser implements TagParser {
     }
 
     @Override
-    public void parse(Element element, AbstractSSMLElement parent) {
+    public void parse(Element element, AbstractElement parent) {
         AudioElement audioElement = getAudioElement(element, parent);
 
         parent.addChild(audioElement);
@@ -24,15 +24,15 @@ public class AudioTagParser implements TagParser {
         NodeList childNodes = element.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node childNode = childNodes.item(i);
-            if (childNode.getNodeType() == Node.ELEMENT_NODE ||
-                    childNode.getNodeType() == Node.TEXT_NODE
-            ) {
-                context.traverseNodes(childNode, audioElement);
+            if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                context.parseElement(childNode, audioElement);
+            } else if (childNode.getNodeType() == Node.TEXT_NODE) {
+                context.parseText(childNode, audioElement);
             }
         }
     }
 
-    private AudioElement getAudioElement(Element element, AbstractSSMLElement parent) {
+    private AudioElement getAudioElement(Element element, AbstractElement parent) {
         String srcAttribute = element.getAttribute("src");
         String clipBeginAttribute = element.getAttribute("clipBegin");
         String clipEndAttribute = element.getAttribute("clipEnd");

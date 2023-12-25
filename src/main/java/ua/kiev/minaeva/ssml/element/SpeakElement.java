@@ -3,7 +3,7 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class SpeakElement extends AbstractSSMLElement {
+public class SpeakElement extends AbstractElement {
 
     public SpeakElement() {
         super("speak", null);
@@ -15,7 +15,7 @@ public class SpeakElement extends AbstractSSMLElement {
     }
 
     @Override
-    public SSMLElementContract getParent() {
+    public ElementContract getParent() {
         return null;
     }
 

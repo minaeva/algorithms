@@ -2,7 +2,7 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class VoiceElement extends AbstractSSMLElement {
+public class VoiceElement extends AbstractElement {
 
     private String gender;
     private String variant;
@@ -15,7 +15,7 @@ public class VoiceElement extends AbstractSSMLElement {
         return "voice";
     }
 
-    public VoiceElement(AbstractSSMLElement parent, String gender, String variant,
+    public VoiceElement(AbstractElement parent, String gender, String variant,
                         String language, String required, String ordering) {
         super("voice", parent);
         this.gender = gender;

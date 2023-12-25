@@ -1,18 +1,15 @@
 package ua.kiev.minaeva.ssml;
 
-import org.junit.jupiter.api.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import ua.kiev.minaeva.ssml.element.AbstractSSMLElement;
-import ua.kiev.minaeva.ssml.element.SSMLElementContract;
+import ua.kiev.minaeva.ssml.document.SSMLDocument;
+import ua.kiev.minaeva.ssml.element.AbstractElement;
 import ua.kiev.minaeva.ssml.element.TextElement;
 import ua.kiev.minaeva.ssml.parser.*;
-import ua.kiev.minaeva.ssml.visitor.PrintingVisitor;
-import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,28 +35,6 @@ import java.util.Map;
         */
 public class SSMLContext {
 
-    private final static String ssmlFromGoogle = """
-            <speak>
-                      Here are <say-as interpret-as="characters">SSML</say-as> samples.
-                      I can pause <break time="3s"/>.
-                      I can play a sound
-                      <audio src="https://www.example.com/MY_MP3_FILE.mp3">didn't get your MP3 audio file</audio>.
-                      I can speak in cardinals. Your number is <say-as interpret-as="cardinal">10</say-as>.
-                      Or I can speak in ordinals. You are <say-as interpret-as="ordinal">10</say-as> in line.
-                      Or I can even speak in digits. The digits for ten are <say-as interpret-as="characters">10</say-as>.
-                      I can also substitute phrases, like the <sub alias="World Wide Web Consortium">W3C</sub>.
-                      Finally, I can speak a paragraph with two sentences.
-                      <p><s>This is sentence one.</s><s>This is sentence two.</s></p>
-            </speak>
-            """;
-
-    private final static String ssmlFromChatGpt = """
-            <speak>
-                Hello, <break time="500ms"/> and welcome to SSML parsing.
-                <prosody rate="slow">This is a slow rate speaking.</prosody>
-            </speak>
-            """;
-
     private Map<String, TagParser> parsingStrategies;
 
     public SSMLDocument handleParsing(String string) {
@@ -81,7 +56,7 @@ public class SSMLContext {
         parsingStrategies.put("say-as", new SayAsTagParser(this));
         parsingStrategies.put("s", new SParser(this));
         parsingStrategies.put("sub", new SubParser(this));
-        parsingStrategies.put("voice", new VoiceTagParser());
+        parsingStrategies.put("voice", new VoiceTagParser(this));
     }
 
     private SSMLDocument parseSSML(String ssml) throws IOException, SAXException, ParserConfigurationException {
@@ -96,7 +71,7 @@ public class SSMLContext {
         return ssmlDocument;
     }
 
-    public void traverseNodes(Node node, AbstractSSMLElement parent) {
+    public void traverseNodes(Node node, AbstractElement parent) {
         NodeList nodeList = node.getChildNodes();
 
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -110,7 +85,7 @@ public class SSMLContext {
         }
     }
 
-    private void parseElement(Node currentNode, AbstractSSMLElement parent) {
+    public void parseElement(Node currentNode, AbstractElement parent) {
         Element element = (Element) currentNode;
         String tagName = element.getTagName();
         TagParser parser = parsingStrategies.get(tagName);
@@ -122,29 +97,9 @@ public class SSMLContext {
         }
     }
 
-    private void parseText(Node currentNode, AbstractSSMLElement parent) {
+    public void parseText(Node currentNode, AbstractElement parent) {
         String textContent = currentNode.getTextContent().trim();
         TextElement textElement = new TextElement(parent, textContent);
         parent.addChild(textElement);
-    }
-
-    @Test
-    void parseChatGPTString() {
-        SSMLDocument ssmlDocument = handleParsing(ssmlFromChatGpt);
-        printDocument(ssmlDocument);
-    }
-
-    @Test
-    void parseGoogleString() {
-        SSMLDocument ssmlDocument = handleParsing(ssmlFromGoogle);
-        printDocument(ssmlDocument);
-    }
-
-    private void printDocument(SSMLDocument document) {
-        SSMLElementVisitor visitor = new PrintingVisitor();
-        document.getRoot().accept(visitor);
-        for (SSMLElementContract child : document.getRoot().getChildren()) {
-            child.accept(visitor);
-        }
     }
 }

@@ -5,11 +5,11 @@ import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 import java.util.Collections;
 import java.util.List;
 
-public class TextElement extends AbstractSSMLElement {
+public class TextElement extends AbstractElement {
 
     private final String textContent;
 
-    public TextElement(AbstractSSMLElement parent, String textContent) {
+    public TextElement(AbstractElement parent, String textContent) {
         super("text", parent);
         this.textContent = textContent;
     }
@@ -24,7 +24,7 @@ public class TextElement extends AbstractSSMLElement {
     }
 
     @Override
-    public void addChild(SSMLElementContract element) {
+    public void addChild(ElementContract element) {
         throw new UnsupportedOperationException("Text nodes cannot have children.");
     }
 
@@ -34,7 +34,7 @@ public class TextElement extends AbstractSSMLElement {
     }
 
     @Override
-    public List<SSMLElementContract> getChildren() {
+    public List<ElementContract> getChildren() {
         return Collections.EMPTY_LIST;
     }
 

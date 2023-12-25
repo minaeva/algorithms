@@ -7,30 +7,30 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractSSMLElement implements SSMLElementContract {
+public abstract class AbstractElement implements ElementContract {
 
     private String tagName;
-    private SSMLElementContract parent;
-    private final List<SSMLElementContract> children = new ArrayList<>();
+    private ElementContract parent;
+    private final List<ElementContract> children = new ArrayList<>();
     private final Map<String, String> attributes = new HashMap<>();
 
     @Override
-    public void setParent(SSMLElementContract element) {
+    public void setParent(ElementContract element) {
         this.parent = element;
     }
 
     @Override
-    public SSMLElementContract getParent() {
+    public ElementContract getParent() {
         return this.parent;
     }
 
     @Override
-    public void addChild(SSMLElementContract element) {
+    public void addChild(ElementContract element) {
         this.children.add(element);
     }
 
     @Override
-    public List<SSMLElementContract> getChildren() {
+    public List<ElementContract> getChildren() {
         return new ArrayList<>(this.children);
     }
 
@@ -56,10 +56,10 @@ public abstract class AbstractSSMLElement implements SSMLElementContract {
 
     public abstract void accept(SSMLElementVisitor visitor);
 
-    public AbstractSSMLElement() {
+    public AbstractElement() {
     }
 
-    public AbstractSSMLElement(String tagName, AbstractSSMLElement parent) {
+    public AbstractElement(String tagName, AbstractElement parent) {
         this.tagName = tagName;
         this.parent = parent;
     }

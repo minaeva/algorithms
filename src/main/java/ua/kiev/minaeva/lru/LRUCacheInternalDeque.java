@@ -1,10 +1,10 @@
-package ua.kiev.minaeva;
+package ua.kiev.minaeva.lru;
 
 import java.util.*;
 
-public class LRUCache {
+public class LRUCacheInternalDeque {
 
-    class LRUNode {
+    static class LRUNode {
         int key;
         int value;
         LRUNode prev;
@@ -24,7 +24,7 @@ public class LRUCache {
     private final LRUNode head;
     private final LRUNode tail;
 
-    public LRUCache(int capacity) {
+    public LRUCacheInternalDeque(int capacity) {
         this.capacity = capacity;
         hashMap = new HashMap<>();
 

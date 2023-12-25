@@ -5,15 +5,15 @@ import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 import java.util.List;
 import java.util.Map;
 
-public interface SSMLElementContract {
+public interface ElementContract {
 
-    void setParent(SSMLElementContract element);
+    void setParent(ElementContract element);
 
-    SSMLElementContract getParent();
+    ElementContract getParent();
 
-    void addChild(SSMLElementContract element);
+    void addChild(ElementContract element);
 
-    List<SSMLElementContract> getChildren();
+    List<ElementContract> getChildren();
 
     void addAttribute(String name, String value);
 

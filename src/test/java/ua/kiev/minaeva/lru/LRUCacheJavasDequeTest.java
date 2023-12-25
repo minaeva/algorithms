@@ -1,14 +1,14 @@
-package ua.kiev.minaeva;
+package ua.kiev.minaeva.lru;
 
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LRUCacheTest {
+public class LRUCacheJavasDequeTest {
 
-    @Test
+@Test
     void scenario1() {
-        LRUCache lruCache = new LRUCache(3);
+        LRUCacheInternalDeque lruCache = new LRUCacheInternalDeque(3);
         lruCache.put(1, 5);
         lruCache.put(2, 5);
         lruCache.put(1, 3);
@@ -21,7 +21,7 @@ public class LRUCacheTest {
 
     @Test
     void scenario2() {
-        LRUCache lruCache = new LRUCache(3);
+        LRUCacheInternalDeque lruCache = new LRUCacheInternalDeque(3);
         lruCache.put(1, 11);
         lruCache.put(2, 22);
         lruCache.put(3, 33);
@@ -42,6 +42,4 @@ public class LRUCacheTest {
 
         assertThat(lruCache.get(2)).isEqualTo(-1);
     }
-
-
 }

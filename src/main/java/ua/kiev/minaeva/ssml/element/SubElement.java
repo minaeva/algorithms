@@ -2,11 +2,11 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class SubElement extends AbstractSSMLElement {
+public class SubElement extends AbstractElement {
 
     private String alias;
 
-    public SubElement(AbstractSSMLElement parent, String alias) {
+    public SubElement(AbstractElement parent, String alias) {
         super("sub", parent);
         this.alias = alias;
     }

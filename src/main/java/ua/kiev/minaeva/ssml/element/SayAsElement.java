@@ -2,13 +2,13 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class SayAsElement extends AbstractSSMLElement {
+public class SayAsElement extends AbstractElement {
 
     private String interpretAs;
     private String format;
     private String detail;
 
-    public SayAsElement(AbstractSSMLElement parent, String interpretAs, String format, String detail) {
+    public SayAsElement(AbstractElement parent, String interpretAs, String format, String detail) {
         super("say-as", parent);
         this.interpretAs = interpretAs;
         this.format = format;

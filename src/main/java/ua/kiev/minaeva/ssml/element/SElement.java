@@ -3,9 +3,9 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class SElement extends AbstractSSMLElement {
+public class SElement extends AbstractElement {
 
-    public SElement(AbstractSSMLElement parent) {
+    public SElement(AbstractElement parent) {
         super("s", parent);
        }
 

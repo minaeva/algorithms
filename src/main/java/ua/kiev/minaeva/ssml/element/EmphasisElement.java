@@ -2,11 +2,11 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class EmphasisElement extends AbstractSSMLElement {
+public class EmphasisElement extends AbstractElement {
 
     private String level;
 
-    public EmphasisElement(AbstractSSMLElement parent, String level) {
+    public EmphasisElement(AbstractElement parent, String level) {
         super("emphasis", parent);
         this.level = level;
     }

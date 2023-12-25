@@ -4,7 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import ua.kiev.minaeva.ssml.SSMLContext;
-import ua.kiev.minaeva.ssml.element.AbstractSSMLElement;
+import ua.kiev.minaeva.ssml.element.AbstractElement;
 import ua.kiev.minaeva.ssml.element.ProsodyElement;
 
 public class ProsodyTagParser implements TagParser {
@@ -16,21 +16,24 @@ public class ProsodyTagParser implements TagParser {
     }
 
     @Override
-    public void parse(Element element, AbstractSSMLElement parent) {
-        String rateElement = element.getAttribute("rate");
-        String pitchElement = element.getAttribute("pitch");
+    public void parse(Element element, AbstractElement parent) {
+        ProsodyElement prosodyElement = getProsodyElement(element, parent);
 
-        ProsodyElement prosodyElement = new ProsodyElement(parent,
-                rateElement, pitchElement);
+        parent.addChild(prosodyElement);
 
         NodeList childNodes = element.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node childNode = childNodes.item(i);
-            if (childNode.getNodeType() == Node.ELEMENT_NODE ||
-                    childNode.getNodeType() == Node.TEXT_NODE
-            ) {
-                context.traverseNodes(childNode, prosodyElement);
+            if (childNode.getNodeType() == Node.TEXT_NODE) {
+                context.parseText(childNode, prosodyElement);
             }
         }
+    }
+
+    private static ProsodyElement getProsodyElement(Element element, AbstractElement parent) {
+        String rateElement = element.getAttribute("rate");
+        String pitchElement = element.getAttribute("pitch");
+
+        return new ProsodyElement(parent, rateElement, pitchElement);
     }
 }

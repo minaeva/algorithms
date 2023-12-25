@@ -2,12 +2,12 @@ package ua.kiev.minaeva.ssml.element;
 
 import ua.kiev.minaeva.ssml.visitor.SSMLElementVisitor;
 
-public class BreakElement extends AbstractSSMLElement {
+public class BreakElement extends AbstractElement {
 
     private String time;
     private String strength;
 
-    public BreakElement(AbstractSSMLElement parent, String time, String strength) {
+    public BreakElement(AbstractElement parent, String time, String strength) {
         super("break", parent);
         this.time = time;
         this.strength = strength;
