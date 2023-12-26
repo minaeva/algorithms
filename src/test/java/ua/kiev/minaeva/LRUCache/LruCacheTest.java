@@ -1,70 +1,14 @@
-package ua.kiev.minaeva.lru;
+package ua.kiev.minaeva.LRUCache;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static ua.kiev.minaeva.LRUCache.LRUCacheProvider.createLRUCache;
 
-public class LRUCacheInternalDequeTest {
-
-    @Test
-    void scenario1() {
-        LRUCacheInternalDeque lruCache = new LRUCacheInternalDeque(3);
-        lruCache.put(1, 5);
-        lruCache.put(2, 5);
-        lruCache.put(1, 3);
-        lruCache.print();
-
-        int result = lruCache.get(1);
-
-        assertThat(result).isEqualTo(3);
-    }
+public class LruCacheTest {
 
     @Test
-    void scenario2() {
-        LRUCacheInternalDeque lruCache = new LRUCacheInternalDeque(3);
-        lruCache.put(1, 11);
-        lruCache.put(2, 22);
-        lruCache.put(3, 33);
-        lruCache.print();
-        assertThat(lruCache.get(1)).isEqualTo(11);
-        assertThat(lruCache.get(2)).isEqualTo(22);
-        assertThat(lruCache.get(3)).isEqualTo(33);
-
-        lruCache.put(5, 55);
-        lruCache.print();
-        assertThat(lruCache.get(1)).isEqualTo(-1);
-
-        lruCache.get(3);
-        lruCache.print();
-
-        lruCache.put(1, 1);
-        lruCache.print();
-
-        assertThat(lruCache.get(2)).isEqualTo(-1);
-    }
-
-    @Test
-    void scenario3() {
-        LRUCacheInternalDeque lruCache = new LRUCacheInternalDeque(2);
-        lruCache.put(1, 11);
-        lruCache.put(2, 22);
-        lruCache.get(1);
-        lruCache.print();
-
-        lruCache.put(3, 33);
-        lruCache.print();
-
-        assertEquals(11, lruCache.get(1));
-        assertNull(lruCache.get(2));
-        assertEquals(33, lruCache.get(3));
-    }
-
-/*
-
-    /*
-        @Test
     public void getShouldReturnValueForExistingKey() {
         LRUCache<String> lruCache = createLRUCache(new CacheLimits(10));
         lruCache.set("foo", "bar");
@@ -140,6 +84,4 @@ public class LRUCacheInternalDequeTest {
 
         assertEquals("1value", lruCache.get("1key"));
     }
-    * */
-
 }

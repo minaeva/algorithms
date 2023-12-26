@@ -2,6 +2,7 @@ package ua.kiev.minaeva.lru;
 
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 public class LRUCacheJavasDeque {
@@ -13,6 +14,7 @@ public class LRUCacheJavasDeque {
     public LRUCacheJavasDeque(int capacity) {
         this.capacity = capacity;
         this.map = new HashMap<>(capacity);
+        deque = new LinkedList<>();
     }
 
     public void put(int key, int value) {
@@ -44,4 +46,13 @@ public class LRUCacheJavasDeque {
         deque.addFirst(key);
         return value;
     }
+
+    public void print() {
+        Deque<Integer> dequeToPrint = new LinkedList<>(deque);
+        while (!dequeToPrint.isEmpty()) {
+            System.out.println(deque.removeFirst());
+        }
+        System.out.println("===========");
+    }
+
 }
