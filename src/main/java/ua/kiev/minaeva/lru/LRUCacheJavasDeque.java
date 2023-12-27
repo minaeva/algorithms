@@ -9,7 +9,7 @@ public class LRUCacheJavasDeque {
 
     private final int capacity;
     private final Map<Integer, Integer> map;
-    private Deque<Integer> deque;
+    private final Deque<Integer> deque;
 
     public LRUCacheJavasDeque(int capacity) {
         this.capacity = capacity;
@@ -50,7 +50,8 @@ public class LRUCacheJavasDeque {
     public void print() {
         Deque<Integer> dequeToPrint = new LinkedList<>(deque);
         while (!dequeToPrint.isEmpty()) {
-            System.out.println(deque.removeFirst());
+            Integer key = dequeToPrint.removeFirst();
+            System.out.println(key + " " + map.get(key));
         }
         System.out.println("===========");
     }
