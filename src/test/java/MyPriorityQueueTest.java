@@ -9,7 +9,7 @@ public class MyPriorityQueueTest {
 
     @Test
     void add_5_3_7() {
-        MyPriorityQueue queue = new MyPriorityQueue<>();
+        MyPriorityQueue<Integer> queue = new MyPriorityQueue<>();
         queue.add(5);
         queue.add(3);
         queue.add(7);
@@ -20,7 +20,7 @@ public class MyPriorityQueueTest {
 
     @Test
     void add_3_7_8_2_4_6() {
-        MyPriorityQueue queue = new MyPriorityQueue<>();
+        MyPriorityQueue<Integer> queue = new MyPriorityQueue<>();
         queue.add(3);
         queue.add(7);
         queue.add(8);
@@ -37,7 +37,7 @@ public class MyPriorityQueueTest {
 
     @Test
     void add_15_10_20_17_8() {
-        MyPriorityQueue queue = new MyPriorityQueue<>();
+        MyPriorityQueue<Integer> queue = new MyPriorityQueue<>();
         queue.add(15);
         queue.add(10);
         queue.add(20);
@@ -50,7 +50,7 @@ public class MyPriorityQueueTest {
 
     @Test
     void add_15_10_20_17_8_9_16_14() {
-        MyPriorityQueue queue = new MyPriorityQueue<>();
+        MyPriorityQueue<Integer> queue = new MyPriorityQueue<>();
         queue.add(15);
         queue.add(10);
         queue.add(20);
@@ -68,7 +68,7 @@ public class MyPriorityQueueTest {
 
     @Test
     void add_3_7_8_2_4_6_remove4() {
-        MyPriorityQueue queue = new MyPriorityQueue<>();
+        MyPriorityQueue<Integer> queue = new MyPriorityQueue<>();
         queue.add(3);
         queue.add(7);
         queue.add(8);
@@ -82,7 +82,7 @@ public class MyPriorityQueueTest {
 
     @Test
     void add_3_7_8_2_4_6_remove3() {
-        MyPriorityQueue queue = new MyPriorityQueue<>();
+        MyPriorityQueue<Integer> queue = new MyPriorityQueue<>();
         queue.add(3);
         queue.add(7);
         queue.add(8);
@@ -96,7 +96,7 @@ public class MyPriorityQueueTest {
 
     @Test
     void add_3_7_8_2_4_6_remove8() {
-        MyPriorityQueue queue = new MyPriorityQueue<>();
+        MyPriorityQueue<Integer> queue = new MyPriorityQueue<>();
         queue.add(3);
         queue.add(7);
         queue.add(8);
