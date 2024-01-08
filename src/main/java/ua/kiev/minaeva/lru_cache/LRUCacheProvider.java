@@ -1,4 +1,4 @@
-package ua.kiev.minaeva.LRUCache;
+package ua.kiev.minaeva.lru_cache;
 
 public class LRUCacheProvider {
     public static <T> LRUCache<T> createLRUCache(CacheLimits options) {

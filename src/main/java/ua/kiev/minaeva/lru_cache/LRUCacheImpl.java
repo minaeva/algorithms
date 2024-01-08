@@ -1,4 +1,4 @@
-package ua.kiev.minaeva.LRUCache;
+package ua.kiev.minaeva.lru_cache;
 
 import java.util.HashMap;
 import java.util.Map;

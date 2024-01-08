@@ -1,5 +1,6 @@
+package ua.kiev.minaeva;
+
 import org.junit.jupiter.api.Test;
-import ua.kiev.minaeva.MyPriorityQueue;
 
 import java.util.List;
 

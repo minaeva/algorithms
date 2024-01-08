@@ -1,4 +1,4 @@
-package ua.kiev.minaeva.LRUCache;
+package ua.kiev.minaeva.lru_cache;
 
 /**
  * A Least Recently Used (LRU) cache is a type of cache that evicts the 'least recently used items'

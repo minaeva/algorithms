@@ -1,10 +1,10 @@
-package ua.kiev.minaeva.LRUCache;
+package ua.kiev.minaeva.lru_cache;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static ua.kiev.minaeva.LRUCache.LRUCacheProvider.createLRUCache;
+import static ua.kiev.minaeva.lru_cache.LRUCacheProvider.createLRUCache;
 
 public class LruCacheTest {
 

@@ -1,4 +1,4 @@
-package ua.kiev.minaeva.lru;
+package ua.kiev.minaeva.lru_cache.other_implementations;
 
 import java.util.Deque;
 import java.util.HashMap;
