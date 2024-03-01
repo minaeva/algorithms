@@ -17,7 +17,7 @@ public class UnionFindTest {
     public void union1and2() {
         UnionFind unionFind = new UnionFind(5);
         unionFind.union(1, 2);
-        assertArrayEquals(unionFind.getArray(), new int[]{0, 1, 1, 3, 4});
+        assertArrayEquals(unionFind.getArray(), new int[]{0, 2, 2, 3, 4});
     }
 
     @Test
@@ -25,7 +25,7 @@ public class UnionFindTest {
         UnionFind unionFind = new UnionFind(5);
         unionFind.union(1, 2);
         unionFind.union(2, 3);
-        assertArrayEquals(unionFind.getArray(), new int[]{0, 1, 1, 1, 4});
+        assertArrayEquals(unionFind.getArray(), new int[]{0, 3, 3, 3, 4});
     }
 
     @Test
