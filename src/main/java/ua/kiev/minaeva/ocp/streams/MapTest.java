@@ -2,9 +2,7 @@ package ua.kiev.minaeva.ocp.streams;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -94,7 +92,7 @@ public class MapTest {
     // convert list of integers into map, where key is the integer, value is the counter
     void transformToMapOfIntCounter() {
         List<Integer> integers = List.of(22, 7, 5, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1);
-        Map<Integer,Integer> map = integers.stream()
+        Map<Integer, Integer> map = integers.stream()
                 .collect(Collectors.toMap(Function.identity(), value -> 1, Integer::sum));
         System.out.println(map);
     }
@@ -102,7 +100,7 @@ public class MapTest {
     // convert list of integers into map, where key is the integer, value is the accumulated sum
     void transformToMapOfIntSumOfValues() {
         List<Integer> integers = List.of(22, 7, 5, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1);
-        Map<Integer,Integer> map = integers.stream()
+        Map<Integer, Integer> map = integers.stream()
                 .collect(Collectors.toMap(Function.identity(), value -> value, Integer::sum));
         System.out.println(map);
     }
@@ -127,8 +125,28 @@ public class MapTest {
         System.out.println(result);
     }
 
-    //Use map to transform a stream of objects into another stream of objects with specific properties modified.
+    //Use map to transform a stream of integers into another list of strings
+    void transformToListOfStrings() {
+        List<Integer> integers = List.of(22, 7, 5, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1);
 
+        List<String> result = integers.stream()
+                .distinct().sorted(Comparator.reverseOrder())
+                .map(Objects::toString)
+                .toList();
+        System.out.println(result);
+    }
+
+    //Use map to transform a stream of objects into another stream of objects with specific properties modified.
+    void addToListOfStrings() {
+        List<Integer> integers = List.of(22, 7, 5, 5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 1);
+        List<String> strings = new ArrayList<>(List.of("a", "list", "sUper", "enD", "A", "elephant"));
+
+        strings.addAll(integers.stream()
+                .distinct().sorted(Comparator.reverseOrder())
+                .map(Objects::toString)
+                .toList());
+        System.out.println(strings);
+    }
 
     @Test
     void test() {
@@ -145,5 +163,7 @@ public class MapTest {
         transformToMapOfIntSumOfValues();
         transformToListOfSums();
         transformToMapOfSums();
+        transformToListOfStrings();
+        addToListOfStrings();
     }
 }
