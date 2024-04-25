@@ -8,20 +8,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class ConvertSymbolsIds {
 
     int width = 5;
     String symbolsScreen = """
-            ["H3","M1","M3","M1","M2"],
-            ["H3","WD","M3","WD","M2"],
-            ["H2","L2","L2","M1","M3"]
+            ["L1","M2","WD","H1","M2"],
+            ["M2","L2","M3","L3","H1"],
+            ["H2","L3","H3","L4","M3"]
             """;
 
     String responseScreen =
-            "3,13,6,6,12," +
-                    "10,3,6,11,11," +
-                    "9,6,12,11,9"
-            ;
+            "3,13,3,12,12," +
+                    "3,3,6,6,11," +
+                    "10,6,6,11,9";
 
     Map<String, String> symbol_id = new HashMap<>();
 
@@ -56,20 +58,17 @@ public class ConvertSymbolsIds {
         System.out.println(ids.equals(responseIds));
     }
 
-    public void idsToSymbols() {
-        List<String> responseIds = stringToListOfElements(responseScreen);
+    public List<String> idsToSymbols(String input) {
+        List<String> responseIds = stringToListOfElements(input);
         Map<String, String> id_symbol = symbol_id.entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getValue,
                         Map.Entry::getKey
                 ));
-        List<String> responseSymbols = responseIds.stream().map(id_symbol::get).toList();
-
-        System.out.println("response symbols");
-        printMatrix(responseSymbols);
+        return responseIds.stream().map(id_symbol::get).toList();
     }
 
-    private  List<String> stringToListOfElements(String string) {
+    private List<String> stringToListOfElements(String string) {
         String[] randomLogSymbols = string.replaceAll("\n", "").split(",");
 
         List<String> result = new ArrayList<>();
@@ -83,10 +82,10 @@ public class ConvertSymbolsIds {
         return result;
     }
 
-    private  void printMatrix(List<String> ids) {
+    private void printMatrix(List<String> ids) {
         int size = ids.size();
         for (int j = 0; j < size / width; j++) {
-            for (int i = j; i < j + width; i++) {
+            for (int i = j * width; i < j * width + width; i++) {
                 System.out.print(ids.get(i) + " ");
             }
             System.out.print("\n");
@@ -103,6 +102,19 @@ public class ConvertSymbolsIds {
     @Test
     void testIdsToSymbols() {
         // paste response matrix (ids)
-        idsToSymbols();
+        String matrix = "9,7,2,3,7," +
+                "7,10,8,11,3," +
+                "4,11,5,12,8";
+
+        List<String> responseSymbols = idsToSymbols(matrix);
+        System.out.println("response symbols");
+        printMatrix(responseSymbols);
+
+        System.out.println("***");
+        List<String> expectedSymbols = stringToListOfElements(symbolsScreen);
+        printMatrix(expectedSymbols);
+
+        System.out.println("***");
+        assertEquals(expectedSymbols, responseSymbols);
     }
 }
